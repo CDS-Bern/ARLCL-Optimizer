@@ -15,7 +15,7 @@ public class CustomTextArea {
     }
 
     public void setEditable(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             editable = b;
         }
         else {
@@ -24,37 +24,37 @@ public class CustomTextArea {
     }
 
     public void setBounds(int a, int b, int c,int d) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_TextArea.setBounds(a,b,c,d);
         }
     }
 
     public void setFocusable(boolean b) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_TextArea.setFocusable(b);
         }
     }
 
     public void setEnabled(boolean b) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_TextArea.setEnabled(b);
         }
     }
 
     public void setBackground(Color c) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_TextArea.setBackground(c);
         }
     }
 
     public void setFont(Font f) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_TextArea.setFont(f);
         }
     }
 
     public void setText(String s) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.headless_TextArea = s;
         }
         else {
@@ -63,7 +63,7 @@ public class CustomTextArea {
     }
 
     public String getText() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.headless_TextArea;
         }
         else {
@@ -72,7 +72,7 @@ public class CustomTextArea {
     }
 
     public Object getTextArea() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.headless_TextArea;
         }
         else{

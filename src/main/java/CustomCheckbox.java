@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.event.ItemListener;
 
 public class CustomCheckbox {
 
@@ -18,13 +19,13 @@ public class CustomCheckbox {
     }
 
     public void setBounds(int a, int b, int c,int d) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_Checkbox.setBounds(a,b,c,d);
         }
     }
 
     public void setEnabled(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.enabled = b;
         }
         else {
@@ -33,7 +34,7 @@ public class CustomCheckbox {
     }
 
     public boolean isEnabled() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.enabled;
         }
         else {
@@ -42,7 +43,7 @@ public class CustomCheckbox {
     }
 
     public void setState(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.state = b;
         }
         else {
@@ -51,7 +52,7 @@ public class CustomCheckbox {
     }
 
     public boolean getState() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.state;
         }
         else {
@@ -61,5 +62,17 @@ public class CustomCheckbox {
 
     public Object getCheckbox() {
         return this.gui_Checkbox;
+    }
+
+    public void addItemListener(ItemListener i) {
+        if (!SimApp.headless_mode) {
+            this.gui_Checkbox.addItemListener(i);
+        }
+    }
+
+    public void setVisible(boolean visibility_state) {
+        if (!SimApp.headless_mode) {
+            this.gui_Checkbox.setVisible(visibility_state);
+        }
     }
 }

@@ -17,7 +17,7 @@ public class CustomButton {
     }
 
     public void setVisible(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.visible = b;
         }
         else {
@@ -26,13 +26,13 @@ public class CustomButton {
     }
 
     public void setBounds(int a, int b, int c,int d) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_Button.setBounds(a,b,c,d);
         }
     }
 
     public void setEnabled(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.enabled = b;
         }
         else {
@@ -41,7 +41,7 @@ public class CustomButton {
     }
 
     public boolean isEnabled() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.enabled;
         }
         else {
@@ -50,7 +50,7 @@ public class CustomButton {
     }
 
     public void addActionListener(ActionListener l) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_Button.addActionListener(l);
         }
     }

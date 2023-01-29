@@ -38,17 +38,17 @@ public class Node {
 
     public void set_initial_random_relative_positions(){
         // Set the extent for the initial random positioning
-        final double initial_global_minPlotX = -Sim_App.max_distance;
-        final double initial_global_maxPlotX = Sim_App.max_distance;
-        final double initial_global_minPlotY = -Sim_App.max_distance;
-        final double initial_global_maxPlotY = Sim_App.max_distance;
+        final double initial_global_minPlotX = -SimApp.max_distance;
+        final double initial_global_maxPlotX = SimApp.max_distance;
+        final double initial_global_minPlotY = -SimApp.max_distance;
+        final double initial_global_maxPlotY = SimApp.max_distance;
 
         // Use this to set position at 0
-        //node.update_CurrentNodePos(0, 0);
+        update_CurrentNodePos(0, 0);
 
-        double randomX = initial_global_minPlotX + Sim_App.random.nextDouble() * (initial_global_maxPlotX - initial_global_minPlotX);
-        double randomY = initial_global_minPlotY + Sim_App.random.nextDouble() * (initial_global_maxPlotY - initial_global_minPlotY);
-        update_CurrentNodePos(randomX, randomY);
+//        double randomX = initial_global_minPlotX + SimApp.random.nextDouble() * (initial_global_maxPlotX - initial_global_minPlotX);
+//        double randomY = initial_global_minPlotY + SimApp.random.nextDouble() * (initial_global_maxPlotY - initial_global_minPlotY);
+//        update_CurrentNodePos(randomX, randomY);
     }
 
     public double getDistanceToNode(Node NodeB, boolean use_true_position){

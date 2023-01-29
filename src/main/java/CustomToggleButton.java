@@ -18,22 +18,23 @@ public class CustomToggleButton {
     }
 
     public void setVisible(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.visible = b;
         }
         else {
             this.gui_ToggleButton.setVisible(b);
+            SimApp.auto_resumer_btn.setVisible(b);
         }
     }
 
     public void setBounds(int a, int b, int c,int d) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_ToggleButton.setBounds(a,b,c,d);
         }
     }
 
     public void setEnabled(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.enabled = b;
         }
         else {
@@ -42,7 +43,7 @@ public class CustomToggleButton {
     }
 
     public boolean isEnabled() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.enabled;
         }
         else {
@@ -51,7 +52,7 @@ public class CustomToggleButton {
     }
 
     public void setClicked(boolean b) {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             this.clicked = b;
         }
         else {
@@ -60,7 +61,7 @@ public class CustomToggleButton {
     }
 
     public boolean isClicked() {
-        if (Sim_App.headless_mode) {
+        if (SimApp.headless_mode) {
             return this.clicked;
         }
         else {
@@ -69,12 +70,18 @@ public class CustomToggleButton {
     }
 
     public void addActionListener(ActionListener l) {
-        if (!Sim_App.headless_mode) {
+        if (!SimApp.headless_mode) {
             this.gui_ToggleButton.addActionListener(l);
         }
     }
 
     public Object getToggleButton() {
         return this.gui_ToggleButton;
+    }
+
+    public void setText(String value) {
+        if (!SimApp.headless_mode) {
+            this.gui_ToggleButton.setText(value);
+        }
     }
 }
