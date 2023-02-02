@@ -23,7 +23,6 @@ public class CustomToggleButton {
         }
         else {
             this.gui_ToggleButton.setVisible(b);
-            SimApp.auto_resumer_btn.setVisible(b);
         }
     }
 
