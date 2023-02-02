@@ -119,6 +119,7 @@ Optimization Cycles|For how many cycles to perform localization.
 ----
 
 ### Demo
+www.youtube.com/watch?v=2DhkNLAwHkw
 [![ARLCL-Optimizer GUI Usage/Export demo with UWB measurements](https://indoorpaths.com/3rd_sources/ARLCL/GUI_screenshot.png)](https://youtu.be/2DhkNLAwHkw)
 
 ## Headless mode
