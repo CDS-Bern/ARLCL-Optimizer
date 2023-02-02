@@ -1,5 +1,3 @@
-[TOCM]
-
 # ARLCL-Optimizer
 
 [![ARLCL-Optimizer](https://indoorpaths.com/3rd_sources/ARLCL/Cycles_in_ARLCL.jpg "ARLCL-Optimizer")](https://indoorpaths.com/3rd_sources/ARLCL/Cycles_in_ARLCL.jpg "ARLCL-Optimizer")
