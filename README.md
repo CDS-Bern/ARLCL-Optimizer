@@ -17,7 +17,9 @@ Complete Evaluation Dataset for BLE:
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.7552462.svg)](https://doi.org/10.5281/zenodo.7552462)
 
 
-For creating new rss-based database files (e.g. for BLE/WiFi signals), the structure of a database file named "T_4,5,6_1.rss" is the following:
+For the creation of new database files and to support the resulted localization performance, the structure of a database file needs to be specific and contain a) for each node, the positions' ground truth and b) for each pair, the ranging measurement (dBm/time) used by arlcl and the distance measurement (cm) used by the baselines.
+
+DB ("T_4,5,6_1.rss") example for BLE measurements:
 
 	#POSITIONS GROUND TRUTH#
 	4:-5.682;-4.377
@@ -42,7 +44,7 @@ For creating new rss-based database files (e.g. for BLE/WiFi signals), the struc
 	5;6:-58.29407210961294&1.5109
 	6;5:-58.29407210961294&1.5109
 
-and for time-based database files (e.g. for UWB signals), the structure of a database file named "A_2,4,18,30,34_5.smpl" is the following:
+DB ("A_2,4,18,30,34_5.smpl") example for UWB measurements:
 
 	#POSITIONS GROUND TRUTH#
 	2:-213.725998;-196.776993
