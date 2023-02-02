@@ -123,7 +123,7 @@ Optimization Cycles|For how many cycles to perform localization.
 
 ## Headless mode
 
-The application may start by executing the jar and passing the selected parameters.
+For batch execution, the application may start by executing the jar and passing the selected parameters.
 
 Example command:
 
