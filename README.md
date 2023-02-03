@@ -128,7 +128,7 @@ For batch execution, the application may start by executing the jar and passing 
 
 Example command:
 
-`$ java -jar "path/to/arlcl-optimizer.jar" out_path="path/to/the/results/folder/" db_path="path/to/the/db/folder/" db_idx_path="path/to/the/db-index/folder/" scenarios_path="D:\\OneDrive - Universitaet Bern\\Workspace\\Swarm Positioning\\UWB\\various\\Listed Scenarios\\35,40_nodes.txt" eval_id=3 seed=3 end_iter=100 opt_iter=1000 threads=1 cycles=50 f_tol=1e-2 max_t=10000 kn=6 min_m=60 contours=30`
+`$ java -jar "path/to/arlcl-optimizer.jar" out_path="path/to/the/results/folder/" db_path="path/to/the/db/folder/" db_idx_path="path/to/the/db-index/folder/" scenarios_path="D:\\OneDrive - Universitaet Bern\\Workspace\\Swarm Positioning\\UWB\\various\\Listed Scenarios\\35,40_nodes.txt" seed=3 end_iter=100 opt_iter=1000 threads=1 cycles=50 f_tol=1e-2 max_t=10000 kn=6 min_m=60 contours=30`
 
 ----
 
