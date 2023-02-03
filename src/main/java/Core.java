@@ -31,6 +31,7 @@ public class Core {
     static String ProductFinalFunctionObject;
 
     static boolean init() throws Exception {
+
         SimApp.appendToTextArea("Initializing SwarmEngine");
 
         MathEngine.generateTheOptimizerThreads();
@@ -416,6 +417,7 @@ public class Core {
             if (SimApp.auto_resumer_btn.getState()){
                 publishResultsInGUI(
                         SimApp.cycleCounter, SimApp.stepCounter, currentNode, cycle_end, export_plot);
+
             }
             else{
                 // Auto resumer is not activated. We have enough rendering time available to draw the step
