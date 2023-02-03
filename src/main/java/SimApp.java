@@ -146,7 +146,7 @@ public class SimApp extends Frame {
 
             String input_rss_folder_path = null;
             String eval_scenarios_path = null;
-            int evaluation_id = 0;
+            int scenario_id = 0;
 
             // This section is for parsing the arguments when these come with the equality sign
             try {
@@ -163,7 +163,7 @@ public class SimApp extends Frame {
                 SimApp.outpath_results_folder_path = str_arguments.get("out_path");
                 input_rss_folder_path = str_arguments.get("rss_db_path");
                 eval_scenarios_path = str_arguments.get("scenarios_path");
-                evaluation_id = Integer.parseInt(str_arguments.get("eval_id"));
+                scenario_id = Integer.parseInt(str_arguments.get("scenario_id"));
                 SimApp.ending_eval_iteration = Integer.parseInt(str_arguments.get("end_iter"));
                 SimApp.optimization_iterations_per_thread = Integer.parseInt(str_arguments.get("opt_iter"));
                 SimApp.max_optimization_time_per_thread = Integer.parseInt(str_arguments.get("max_opt_time"));
@@ -172,6 +172,9 @@ public class SimApp extends Frame {
                 SimApp.kNearestNeighbours_for_BeliefsStrength = Integer.parseInt(str_arguments.get("k_Beliefs"));
                 SimApp.min_effective_measurement = Integer.parseInt(str_arguments.get("min_effect"));
                 SimApp.plotResolution = Integer.parseInt(str_arguments.get("plot_res"));
+
+                SimApp.step_size = Integer.parseInt(str_arguments.get("step"));
+
                 SimApp.results_per_step = false;
                 SimApp.results_per_cycle = true;
             }
@@ -186,7 +189,7 @@ public class SimApp extends Frame {
             SimApp.evaluated_iteration = 0;
 
             // Parse the evaluation scenarios from the combos file
-            eval_scenario = parseEvalScenarios(evaluation_id, eval_scenarios_path);
+            eval_scenario = parseEvalScenarios(scenario_id, eval_scenarios_path);
 
             // This section is for setting our hardcoded minimal arguments
             String deployment_type = eval_scenario[0];
@@ -225,7 +228,15 @@ public class SimApp extends Frame {
             try {
                 resetDataStructures();
                 headlessInit();
-                Core.init();
+
+                boolean valid_measurements_found = Core.init();
+
+                if (!valid_measurements_found){
+                    System.out.println("No valid measurements found in the database");
+                    // At this point we can close the program
+                    System.exit(0);
+                }
+
                 System.out.println("Start Optimizing");
                 SimApp.go_Toggle_btn.setClicked(true);
             } catch (Exception e) {
@@ -1177,6 +1188,7 @@ public class SimApp extends Frame {
     }
 
     static private class openDBBtnAdapter implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1204,6 +1216,7 @@ public class SimApp extends Frame {
                 SimApp.go_Toggle_btn.setVisible(true);
 
                 SimApp.resetChartCanvas();
+                resetTextArea();
                 System.gc();
 
                 //System.out.println(evaluated_scenario_name + " database in " + input_file_path + " loaded."); // TODO: Add it on terminal
@@ -1216,6 +1229,7 @@ public class SimApp extends Frame {
             SimApp.resume_flag = true;
         }
     }
+
 
     static private class executeOptimizationJobInGuiAdapter implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -1259,32 +1273,35 @@ public class SimApp extends Frame {
                             prepareInitializationLog();
 
                             try {
-                                Core.init();
-                                while (!SimApp.stop_optimization){
-                                    // If the auto_resumer_btn is not enabled, we will enter a pause state.
-                                    // Activate the resuming button for the user to be able to proceed manually.
-                                    SimApp.resume_btn.setVisible(true);
-                                    SimApp.auto_resumer_btn.setVisible(true);
-
-                                    if (SimApp.auto_resumer_btn.getState() || resume_flag){
-
-                                        resume_flag = false;
-
-                                        // Hide the resumer button
-                                        SimApp.resume_btn.setVisible(false);
-
-                                        startTime = System.nanoTime();
-                                        Core.resumeSwarmPositioningInGUIMode();
-
-                                        // We completed executing this optimization part. If  the auto_resumer_btn is
-                                        // not enabled, we are entering a pause state. Therefore, activate the resuming
-                                        // button for the user to be able to proceed manually.
+                                if (Core.init()) {
+                                    while (!SimApp.stop_optimization) {
+                                        // If the auto_resumer_btn is not enabled, we will enter a pause state.
+                                        // Activate the resuming button for the user to be able to proceed manually.
                                         SimApp.resume_btn.setVisible(true);
-                                        System.gc();
+                                        SimApp.auto_resumer_btn.setVisible(true);
+
+                                        if (SimApp.auto_resumer_btn.getState() || resume_flag) {
+
+                                            resume_flag = false;
+
+                                            // Hide the resumer button
+                                            SimApp.resume_btn.setVisible(false);
+
+                                            startTime = System.nanoTime();
+                                            Core.resumeSwarmPositioningInGUIMode();
+
+                                            // We completed executing this optimization part. If  the auto_resumer_btn is
+                                            // not enabled, we are entering a pause state. Therefore, activate the resuming
+                                            // button for the user to be able to proceed manually.
+                                            SimApp.resume_btn.setVisible(true);
+                                            System.gc();
+                                        } else {
+                                            Thread.sleep(1000);
+                                        }
                                     }
-                                    else{
-                                        Thread.sleep(1000);
-                                    }
+                                }
+                                else{
+                                    SimApp.appendToTextArea("Canceling optimization!");
                                 }
                                 finishOptimization();
                             } catch (Exception ex) {
@@ -1314,7 +1331,7 @@ public class SimApp extends Frame {
 
     static private class clearTerminalBtnAdapter implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            SimApp.outputTerminal.setText("");
+            resetTextArea();
         }
     }
 
@@ -1356,6 +1373,7 @@ public class SimApp extends Frame {
                 }
 
                 SimApp.plotResolution_inputTextField.setCaretPosition(SimApp.plotResolution_inputTextField.getText().length());
+
             }
         }
     }
@@ -1464,21 +1482,6 @@ public class SimApp extends Frame {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    private static void executeOptimizationJobsInGui() {
-
-        try {
-            Core.init();
-            System.out.println("Start Optimizing");
-            SimApp.go_Toggle_btn.setClicked(true);
-        } catch (Exception e) {
-            e.printStackTrace();
-            // At this point we can close the program
-            System.exit(0); // TODD add that to headless
-        }
-
-        System.out.println("Optimization finished");
     }
 
     private static Integer getTotalIterations() throws Exception {

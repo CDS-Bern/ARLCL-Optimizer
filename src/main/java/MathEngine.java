@@ -268,7 +268,6 @@ class Optimizer extends Thread {
 
     final PositionLikelihood position_likelihood;
     final long optimization_time = Integer.parseInt(SimApp.max_optimization_time_per_thread_inputTextField.getText());
-    final Double initial_step_size = Double.parseDouble(SimApp.initial_step_size_inputTextField.getText());
 
     // simplification 1
     double optimal_probability = Double.NEGATIVE_INFINITY; // POSITIVE_INFINITY // Double.NEGATIVE_INFINITY;
@@ -305,7 +304,9 @@ class Optimizer extends Thread {
             double[] start = {randomX, randomY};
 
             // initial step sizes
-            double[] step = {initial_step_size, initial_step_size};
+
+//            double[] step = {0.02, 0.02};
+            double[] step = {SimApp.step_size, SimApp.step_size};
 
             // convergence tolerance
             double ftol = SimApp.ftol;

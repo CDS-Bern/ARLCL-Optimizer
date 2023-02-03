@@ -30,12 +30,17 @@ import java.util.Map.Entry;
 public class Core {
     static String ProductFinalFunctionObject;
 
-    static void init() throws Exception {
+
+    static boolean init() throws Exception {
+
         SimApp.appendToTextArea("Initializing SwarmEngine");
 
         MathEngine.generateTheOptimizerThreads();
 
-        parseDB();
+        if (!parseDB()){
+            return false;
+        }
+
         // computeInitialCrossDistances();
         // Use this for debugging and to set the nodes to true Pos
         // reset_CurrentNodePos_to_TruePos();
@@ -43,6 +48,8 @@ public class Core {
 
         // This is the first Map_Extent update to set the Global Min/Max X/Y to be ready for even the first optimization
         MapField.updateMapExtent();
+
+        return true;
     }
 
     static void getEffectiveNeighbors(Node currentNode) {
@@ -165,7 +172,7 @@ public class Core {
         }
     }
 
-    static private void parseDB() throws Exception {
+    static private boolean parseDB() throws Exception {
         // Loading the database
         SimApp.appendToTextArea("Parsing Node DB");
 
@@ -174,9 +181,21 @@ public class Core {
         BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
 
         String strLine;
+        int parsed_measurements = 0;
 
-        // Data format in the .rss file is important!
+        // Data format in the DB file is important!
         String positions_header = "#POSITIONS GROUND TRUTH#";
+        
+        String model = null;
+        
+        if (SimApp.ble_model){
+            model = "RSS";
+        }
+        else if (SimApp.uwb_model){
+            model = "TIME";
+        }
+
+        String measurement_header = "#" + model + "_" + SimApp.evaluated_iteration + "#";
 
         String current_parsing_type = null;
 
@@ -188,7 +207,7 @@ public class Core {
                 current_parsing_type = positions_header;
                 continue;
             }
-            else if (strLine.startsWith("#")){
+            else if (strLine.equals(measurement_header)){
                 current_parsing_type = "#";
                 continue;
             }
@@ -198,7 +217,7 @@ public class Core {
             }
 
             if (current_parsing_type != null){
-                // Being here means that we haven't escaped above with a continue due to successful header_check matching
+                // Being here means that we haven't escaped above with a continuation due to successful header_check matching
                 // Handle accordingly the parsed data
                 if (current_parsing_type.equals(positions_header)){
                     // Start with the position
@@ -227,6 +246,7 @@ public class Core {
                     // Update for 1st Node, the measurement towards the 2nd Node
                     SimApp.nodeID_to_nodeObject.get(nodeA).measurement_from_node.put(nodeB, measurement_value);
 
+                    parsed_measurements = parsed_measurements + 1;
                     // System.out.println("Node " + nodeA + " to Node " + nodeB + " measurement: " + measurement_value);
                 }
             }
@@ -234,6 +254,10 @@ public class Core {
 
         //Close the input stream
         fstream.close();
+
+        SimApp.appendToTextArea("\nValid " + model + " measurements found in the database: " + parsed_measurements + "\n");
+
+        return parsed_measurements != 0;
     }
 
     static void resumeSwarmPositioning() {
