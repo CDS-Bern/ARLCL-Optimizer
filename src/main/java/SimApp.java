@@ -172,7 +172,9 @@ public class SimApp extends Frame {
                 SimApp.kNearestNeighbours_for_BeliefsStrength = Integer.parseInt(str_arguments.get("k_Beliefs"));
                 SimApp.min_effective_measurement = Integer.parseInt(str_arguments.get("min_effect"));
                 SimApp.plotResolution = Integer.parseInt(str_arguments.get("plot_res"));
+
                 SimApp.step_size = Integer.parseInt(str_arguments.get("step"));
+
                 SimApp.results_per_step = false;
                 SimApp.results_per_cycle = true;
             }
@@ -1186,6 +1188,7 @@ public class SimApp extends Frame {
     }
 
     static private class openDBBtnAdapter implements ActionListener {
+
         public void actionPerformed(ActionEvent e) {
             final JFrame frame = new JFrame();
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -1226,6 +1229,7 @@ public class SimApp extends Frame {
             SimApp.resume_flag = true;
         }
     }
+
 
     static private class executeOptimizationJobInGuiAdapter implements ActionListener {
         public void actionPerformed(ActionEvent e) {
@@ -1369,6 +1373,7 @@ public class SimApp extends Frame {
                 }
 
                 SimApp.plotResolution_inputTextField.setCaretPosition(SimApp.plotResolution_inputTextField.getText().length());
+
             }
         }
     }

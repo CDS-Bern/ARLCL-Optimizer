@@ -30,7 +30,9 @@ import java.util.Map.Entry;
 public class Core {
     static String ProductFinalFunctionObject;
 
+
     static boolean init() throws Exception {
+
         SimApp.appendToTextArea("Initializing SwarmEngine");
 
         MathEngine.generateTheOptimizerThreads();

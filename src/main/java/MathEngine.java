@@ -304,6 +304,7 @@ class Optimizer extends Thread {
             double[] start = {randomX, randomY};
 
             // initial step sizes
+
 //            double[] step = {0.02, 0.02};
             double[] step = {SimApp.step_size, SimApp.step_size};
 
